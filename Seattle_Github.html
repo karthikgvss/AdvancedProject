@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+  
+  <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    
+    <style>
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      th, td {
+        padding: 15px;
+      }
+    </style>
+  </head>
+
+  <body>  
+    <div > COMMON  </div>
+    <script>
+        function seattleIssueReport(reponame,request) {
+            $.ajax({
+                url: "https://api.github.com/repos/seattletestbed/"+reponame+"/"+request,
+                async: false,
+                dataType: 'json',
+                crossDomain : true,
+                success: function(data) {
+                	processResponse(data);
+                },
+                "error": function(xhr, ajaxOptions, thrownError) {
+                    alert(thrownError);
+                }
+            });
+        };
+	      function processResponse(data) {
+	        var array = data;
+	        document.write('<table><tr><td>ISSUE NUMBER</td><td>TITLE</td><td>BODY</td></tr>');
+	        for (var i = 0; array[i] != undefined; i++) {
+	          var title = array[i].title;
+	          var number = array[i].number;
+		        var body = array[i].body;
+	          document.write('<tr><td>'+number + '</td><td>' + title + '</td><td>'+body+'</td></tr>');
+	        }
+	        document.write('</table>');
+	      };	
+	      document.write('<br><b>ISSUES</b><br>');
+        seattleIssueReport("common","issues");
+	      document.write('<br><b>PULL REQUESTS</b><br>');
+        seattleIssueReport("common","pulls");
+    </script>
+  </body>
+</html>
