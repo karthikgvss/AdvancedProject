@@ -41,8 +41,8 @@
 			  var title = array[i].title;
 	          var number = array[i].number;
 		      var body = array[i].body;
-			  document.write('<tr><td>'+RepoName+'<br><a href='+RepoHtmlUrl+'>'+RepoHtmlUrl+'</a></td>');
-	          document.write('<td>'+arr[5]+'</td><td>'+number+'<br><a href='+HtmlUrl+'>'+HtmlUrl+'</a></td><td>'+title+'</td><td>'+body+'</td></tr>');
+			  document.write('<tr><td><a href='+RepoHtmlUrl+'>'+RepoName+'</a></td>');
+	          document.write('<td>'+arr[5]+'</td><td><a href='+HtmlUrl+'>'+number+'</a></td><td>'+title+'</td><td>'+body+'</td></tr>');
 	        }			
 	     };
 		 seattleIssueReport();	     
