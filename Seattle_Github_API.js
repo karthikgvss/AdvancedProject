@@ -12,48 +12,37 @@
                 }
             });
         };function processRepos(Repodata) {
-            var array = Repodata;
+            var array = Repodata;document.write('<table><tr><th>Repo Name</th><th>Type</th><th>Number</th><th>TITLE</th><th>BODY</th></tr>');
 	        for (var i = 0; array[i] != undefined; i++) {
-	          var RepoUrl = array[i].url;
-	          $.ajax({
-                url: RepoUrl+"/issues",
+	          var RepoApiUrl = array[i].url;
+			  var RepoName = array[i].full_name;
+			  var RepoHtmlUrl = array[i].html_url;
+			  
+			  $.ajax({
+                url: RepoApiUrl+"/issues",
                 async: false,
                 dataType: 'json',
                 crossDomain : true,
                 success: function(data) {
-                	document.write(array[i].full_name);
-					document.write('Issues <br>');
-					processResponse(data);
+		          	processResponse(RepoName, RepoHtmlUrl, data);
                 },
                 "error": function(xhr, ajaxOptions, thrownError) {
                     console.log(thrownError);
 					}
 				});
-			 $.ajax({
-                url: RepoUrl+"/pulls",
-                async: false,
-                dataType: 'json',
-                crossDomain : true,
-                success: function(data) {
-                	document.write(array[i].full_name);
-					document.write('<b> Pull requests</b><br>');
-					processResponse(data);
-					},
-                "error": function(xhr, ajaxOptions, thrownError) {
-                    console.log(thrownError);
-					}
-				});
-	        }
+			 }
+			document.write('</table>');
 	     };	
-		 function processResponse(data) {
-	        var array = data;document.write('<table>');
-	        document.write('<tr><td>ISSUE NUMBER</td><td>TITLE</td><td>BODY</td></tr>');
+		 function processResponse(RepoName, RepoHtmlUrl, data) {
+	        var array = data;
 	        for (var i = 0; array[i] != undefined; i++) {
-	          var title = array[i].title;
+			  var HtmlUrl = array[i].html_url;
+			  var arr = HtmlUrl.split("/");
+			  var title = array[i].title;
 	          var number = array[i].number;
 		      var body = array[i].body;
-	          document.write('<tr><td>'+number + '</td><td>' + title + '</td><td>'+body+'</td></tr>');
-	        }
-			document.write('</table>');
+			  document.write('<tr><td>'+RepoName+'<br><a href='+RepoHtmlUrl+'>'+RepoHtmlUrl+'</a></td>');
+	          document.write('<td>'+arr[5]+'</td><td>'+number+'<br><a href='+HtmlUrl+'>'+HtmlUrl+'</a></td><td>'+title+'</td><td>'+body+'</td></tr>');
+	        }			
 	     };
 		 seattleIssueReport();	     
