@@ -4,10 +4,3 @@
         table-layout:fixed;
         width:100%;		
       }
-      th, td {
-        padding: 5px;
-      }
-      th {
-            background-color: #C8C8C8;
-            cursor: pointer;
-        }
