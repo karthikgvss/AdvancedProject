@@ -3,13 +3,39 @@
   <head>
 	<meta charset="utf-8"/>
 	<title>Github Issues and Pull requests across all repos</title>
-    <script src="jquery-1.11.2.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="Report_style.css">
-  </head>
+      <script src="jquery-1.11.2.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="Report_style.css">
+      <script src="Report_Generator.js"></script>
+      <!-- DataTables CSS -->
+      <link rel="stylesheet" type="text/css" href="DataTables-1.10.5/media/css/jquery.dataTables.css">
+      <!-- DataTables -->
+      <script type="text/javascript" charset="utf8" src="DataTables-1.10.5/media/js/jquery.dataTables.js"></script>
+    </head>
 
   <body>
-	<div id="id01">
-	<script src="Report_Generator.js"></script>
-  </div>
+
+        <h4>Enter the name of the organisation : <input type="text" id="myText" value="seattletestbed">
+        <button type="button" onclick="generateReport(document.getElementById('myText').value)">
+            Submit</button></h4>
+        <div id="output">
+            <table id="table_id" class="display">
+            <thead>
+            <tr>
+                <th>Repo Name</th>
+                <th>Type</th>
+                <th>Number & Label <br>
+                <select id="mySelect"></select>
+                <button type="button" onclick="myFunction()">Show</button>
+                </th>
+                <th>TITLE</th>
+                <th>BODY</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
   </body>
 </html>
