@@ -32,7 +32,7 @@ function processRepos(repo) {
 		var RepoName = repo[i].full_name;
 		var RepoHtmlUrl = repo[i].html_url;
 		$.ajax({
-        	url: RepoApiUrl+"/ises?access_token=cde929ac80882135f84f2c69ac58ceb169896fb1",
+        	url: RepoApiUrl+"/issues?access_token=cde929ac80882135f84f2c69ac58ceb169896fb1",
         	async: false,
                 dataType: 'json',
                 crossDomain : true,
