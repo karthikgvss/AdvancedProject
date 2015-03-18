@@ -5,14 +5,14 @@
 /* function to fetch all the repos from the organisation */
 
 function generateReport(orgName) {
-	console.log(orgName+" is the org name !!");
+	//console.log(orgName+" is the org name !!");
     $.ajax({
-        url: "https://api.github.com/orgs/"+orgName+"/repos",
+        url: "https://api.github.com/orgs/"+orgName+"/repos?access_token=cde929ac80882135f84f2c69ac58ceb169896fb1",
         async: false,
         dataType: 'json',
         crossDomain : true,
         success: function(repos) {
-         	console.log(repos+" is the repos data !!");
+         	//console.log(repos+" is the repos data !!");
             processRepos(repos);
             $(document).ready( function () {
             $('#table_id').DataTable();
@@ -20,7 +20,7 @@ function generateReport(orgName) {
             },
         "error": function(xhr, ajaxOptions, thrownError) {
         	document.getElementById("output").innerHTML = "ERROR : "+thrownError;
-        	//console.log(thrownError);
+        	console.log(thrownError);
         	}
         });
 };
@@ -32,18 +32,18 @@ function processRepos(repo) {
 		var RepoName = repo[i].full_name;
 		var RepoHtmlUrl = repo[i].html_url;
 		$.ajax({
-        	url: RepoApiUrl+"/issues",
+        	url: RepoApiUrl+"/ises?access_token=cde929ac80882135f84f2c69ac58ceb169896fb1",
         	async: false,
                 dataType: 'json',
                 crossDomain : true,
                 success: function(issuesOfRepo) {
                     var out = processRepoData(RepoName, RepoHtmlUrl, issuesOfRepo);
-                    console.log(out+"karthik");
+                    //console.log(out+"karthik");
                     $("#table_id tbody").append(out);
                 },
                 "error": function(xhr, ajaxOptions, thrownError) {
                     document.getElementById("output").innerHTML = "ERROR : "+thrownError;
-                    //console.log(thrownError);
+                    console.log(thrownError);
 		}
 		});
 	}
