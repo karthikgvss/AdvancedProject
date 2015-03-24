@@ -54,7 +54,7 @@ document.getElementById("output").innerHTML = '<table id="table_id" class="displ
 }
 else
 {
-    document.getElementById("output").innerHTML = '<table id="table_id" class="display"><col style="width:17%"><col style="width:12%"><col style="width:13%"><col style="width:29%"><col style="width:8%"><col style="width:21%"><thead><tr><th>Repo Name</th><th>Commited by</th><th>Committed on</th><th>File Names</th><th>Changes</th><th>message</th></tr></thead><tbody></tbody></table>';
+    document.getElementById("output").innerHTML = '<table id="table_id" class="display"><col style="width:19%"><col style="width:12%"><col style="width:15%"><col style="width:26%"><col style="width:10%"><col style="width:18%"><thead><tr><th>Repo Name</th><th>Commited by</th><th>Committed on</th><th>File Names</th><th>Changes</th><th>message</th></tr></thead><tbody></tbody></table>';
     for (var i = 0; repo[i] != undefined; i++) {
         RepoApiUrl = repo[i].url;
         RepoName = repo[i].full_name;
