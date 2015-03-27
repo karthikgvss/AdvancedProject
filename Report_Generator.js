@@ -1,12 +1,12 @@
 function generateReport(orgName,reporttype) {
-	console.log(orgName+" is the org name !!");
+	//console.log(orgName+" is the org name !!");
     $.ajax({
         url: "https://api.github.com/orgs/"+orgName+"/repos?access_token=cde929ac80882135f84f2c69ac58ceb169896fb1",
         async: false,
         dataType: 'json',
         crossDomain : true,
         success: function(repos) {
-         	console.log(repos+" is the repos data !!");
+         	//console.log(repos+" is the repos data !!");
             processRepos(repos,reporttype);
             $(document).ready( function () {
                 $('#table_id').DataTable({
@@ -30,7 +30,7 @@ var out;
 if(reporttype == "issue")
 {
 document.getElementById("output").innerHTML = '<table id="table_id" class="display"><col style="width:14%"><col style="width:6%"><col style="width:10%"><col style="width:10%"><col style="width:10%"><col style="width:15%"><col style="width:35%"><thead><tr><th>Repo Name</th><th>Type</th><th>Number & Label <br><select id="mySelect"></select><button type="button" onclick="myFunction()">Show</button></th><th>Created on</th><th>Updated on</th><th>TITLE</th><th>BODY</th></tr></thead><tbody></tbody></table>';
-        console.log("karthikeya");
+        //console.log("karthikeya");
 	for (var i = 0; repo[i] != undefined; i++) {
 		RepoApiUrl = repo[i].url;
 		RepoName = repo[i].full_name;
@@ -42,7 +42,7 @@ document.getElementById("output").innerHTML = '<table id="table_id" class="displ
                 crossDomain : true,
                 success: function(issuesOfRepo) {
                     out = processRepoIssues(RepoName, RepoHtmlUrl, issuesOfRepo);
-                    console.log(out+"karthik");
+                    //console.log(out+"karthik");
                     $("#table_id tbody").append(out);
                 },
                 "error": function(xhr, ajaxOptions, thrownError) {
@@ -66,7 +66,7 @@ else
                 crossDomain : true,
                 success: function(commitsOfRepo) {
                     out = processRepoCommits(RepoName, RepoHtmlUrl, commitsOfRepo);
-                    console.log(out+"karthik");
+                    //console.log(out+"karthik");
                     $("#table_id tbody").append(out);
                 },
                 "error": function(xhr, ajaxOptions, thrownError) {
@@ -93,7 +93,7 @@ function processRepoCommits(RepoName, RepoHtmlUrl, commit) {
 	for (var i = 0; ( i<=10 && (commit[i]!=undefined)); i++) {
 		
         HtmlUrl = commit[i].html_url;
-		commitApiUrl  = commit[i].url;
+	commitApiUrl  = commit[i].url;
         created_at = commit[i].commit.committer.date;
         committedby = commit[i].commit.committer.name;
         message = commit[i].commit.message;
@@ -104,7 +104,7 @@ function processRepoCommits(RepoName, RepoHtmlUrl, commit) {
                 crossDomain : true,
                 success: function(dataOfCommit) {
                     out = processCommitData(RepoName, RepoHtmlUrl, committedby, HtmlUrl, created_at, message, dataOfCommit);
-                    console.log(out+"karthik");
+                    //console.log(out+"karthik");
                     $("#table_id tbody").append(out);
                 },
                 "error": function(xhr, ajaxOptions, thrownError) {
@@ -132,7 +132,7 @@ for (var i = 0; files[i] != undefined; i++) {
 out+='<tr><td><a href='+RepoHtmlUrl+'>'+RepoName+'</a></td><td>'+committedby;
 out+='</td><td><a href='+HtmlUrl+'>'+created_at+'</a></td><td>'+fileinfo+'</td><td>additions - '+additions+"<br>deletions - "+deletions+'</td><td>'+message+'</td></tr>';    
 return out;
-}
+};
 
 /*function to iterate through the issues list of a repo and display the issues details*/
 function processRepoIssues(RepoName, RepoHtmlUrl, issue) {
