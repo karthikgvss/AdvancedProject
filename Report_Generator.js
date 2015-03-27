@@ -90,7 +90,7 @@ function processRepoCommits(RepoName, RepoHtmlUrl, commit) {
     var created_at;
     var commitApiUrl;
     var labelData = "";
-	for (var i = 0; ( i<=2 && (commit[i]!=undefined)); i++) {
+	for (var i = 0; ( i<=10 && (commit[i]!=undefined)); i++) {
 		
         HtmlUrl = commit[i].html_url;
 		commitApiUrl  = commit[i].url;
