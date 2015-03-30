@@ -14,11 +14,21 @@
 
   <body>
 
-        <h4>Enter the name of the organisation : <input type="text" id="myText" value="seattletestbed">
-        <button type="button" onclick="generateReport(document.getElementById('myText').value,'issue')">
+        <h4>Enter the name of the organisation : <input type="text" id="orgName" value="seattletestbed"><br>
+        <button type="button" onclick="generateReport(document.getElementById('orgName').value,'issue')">
             Show Issue Report</button>
-        <button type="button" onclick="generateReport(document.getElementById('myText').value,'commit')">
-            Show Commit History</button></h4>
+        <button type="button" onclick="generateReport(document.getElementById('orgName').value,'commit')">
+            Show Commit History</button><br>
+        
+        (OR) <br>
+
+        Enter the github user id of the user   : <input type="text" id="userName"  value="karthikgvss"><br>
+        <button type="button" onclick="generateUserReport(document.getElementById('userName').value,'issue')">
+            Show Issue Report</button>
+        <button type="button" onclick="generateUserReport(document.getElementById('userName').value,'commit')">
+            Show Commit History</button>
+        </h4>
+
         <div id="output"> </div>
             
   </body>
