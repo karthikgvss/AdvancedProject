@@ -20,6 +20,28 @@ function generateReport(orgName,reporttype) {
         	}
         });
 };
+function generateUserReport(userName,reporttype) {
+    //console.log(orgName+" is the org name !!");
+    $.ajax({
+        url: "https://api.github.com/users/"+userName+"/repos?access_token=cde929ac80882135f84f2c69ac58ceb169896fb1",
+        async: false,
+        dataType: 'json',
+        crossDomain : true,
+        success: function(repos) {
+            //console.log(repos+" is the repos data !!");
+            processRepos(repos,reporttype);
+            $(document).ready( function () {
+                $('#table_id').DataTable({
+                    paging: false
+                });
+            } );
+            },
+        "error": function(xhr, ajaxOptions, thrownError) {
+            document.getElementById("output").innerHTML = "ERROR : "+thrownError;
+            console.log(thrownError);
+            }
+        });
+};
 /*function to iterate through each repo url and again fetch the corresponding issues of that repo*/
 function processRepos(repo,reporttype) {
 var RepoApiUrl;
@@ -65,9 +87,8 @@ else
                 dataType: 'json',
                 crossDomain : true,
                 success: function(commitsOfRepo) {
-                    out = processRepoCommits(RepoName, RepoHtmlUrl, commitsOfRepo);
-                    //console.log(out+"karthik");
-                    $("#table_id tbody").append(out);
+                    processRepoCommits(RepoName, RepoHtmlUrl, commitsOfRepo);
+                    //console.log(out+"karthik");                    
                 },
                 "error": function(xhr, ajaxOptions, thrownError) {
                     document.getElementById("output").innerHTML = "ERROR : "+thrownError;
@@ -90,10 +111,11 @@ function processRepoCommits(RepoName, RepoHtmlUrl, commit) {
     var created_at;
     var commitApiUrl;
     var labelData = "";
-	for (var i = 0; ( i<=10 && (commit[i]!=undefined)); i++) {
+    var i;
+	for (i = 0; ( i<=9 && (commit[i]!=undefined)); i++) {
 		
         HtmlUrl = commit[i].html_url;
-	commitApiUrl  = commit[i].url;
+	    commitApiUrl  = commit[i].url;
         created_at = commit[i].commit.committer.date;
         committedby = commit[i].commit.committer.name;
         message = commit[i].commit.message;
