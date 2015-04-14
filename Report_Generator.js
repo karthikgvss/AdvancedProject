@@ -1,4 +1,4 @@
-function generateReport(orgName,reporttype) {
+function generateReport(orgName,reporttype,comVal) {
 	//console.log(orgName+" is the org name !!");
     $.ajax({
         url: "https://api.github.com/orgs/"+orgName+"/repos?access_token=cde929ac80882135f84f2c69ac58ceb169896fb1",
@@ -7,7 +7,7 @@ function generateReport(orgName,reporttype) {
         crossDomain : true,
         success: function(repos) {
          	//console.log(repos+" is the repos data !!");
-            processRepos(repos,reporttype);
+            processRepos(repos,reporttype,comVal,'org');
             $(document).ready( function () {
                 $('#table_id').DataTable({
                     paging: false
@@ -20,7 +20,7 @@ function generateReport(orgName,reporttype) {
         	}
         });
 };
-function generateUserReport(userName,reporttype) {
+function generateUserReport(userName,reporttype,comVal) {
     //console.log(orgName+" is the org name !!");
     $.ajax({
         url: "https://api.github.com/users/"+userName+"/repos?access_token=cde929ac80882135f84f2c69ac58ceb169896fb1",
@@ -28,8 +28,8 @@ function generateUserReport(userName,reporttype) {
         dataType: 'json',
         crossDomain : true,
         success: function(repos) {
-            //console.log(repos+" is the repos data !!");
-            processRepos(repos,reporttype);
+            console.log(comVal+repos);
+            processRepos(repos,reporttype,comVal,'user');
             $(document).ready( function () {
                 $('#table_id').DataTable({
                     paging: false
@@ -43,7 +43,7 @@ function generateUserReport(userName,reporttype) {
         });
 };
 /*function to iterate through each repo url and again fetch the corresponding issues of that repo*/
-function processRepos(repo,reporttype) {
+function processRepos(repo,reporttype,comVal,person) {
 var RepoApiUrl;
 var RepoName;
 var RepoHtmlUrl;
@@ -87,7 +87,7 @@ else
                 dataType: 'json',
                 crossDomain : true,
                 success: function(commitsOfRepo) {
-                    processRepoCommits(RepoName, RepoHtmlUrl, commitsOfRepo);
+                    processRepoCommits(RepoName, RepoHtmlUrl, commitsOfRepo,comVal,person);
                     //console.log(out+"karthik");                    
                 },
                 "error": function(xhr, ajaxOptions, thrownError) {
@@ -99,7 +99,7 @@ else
 }
 };
 /*function to iterate through the issues list of a repo and display the issues details*/
-function processRepoCommits(RepoName, RepoHtmlUrl, commit) {
+function processRepoCommits(RepoName, RepoHtmlUrl, commit,comVal,person) {
     var out ='';
     var HtmlUrl;
     var arr;
@@ -112,7 +112,9 @@ function processRepoCommits(RepoName, RepoHtmlUrl, commit) {
     var commitApiUrl;
     var labelData = "";
     var i;
-	for (i = 0; ( i<=9 && (commit[i]!=undefined)); i++) {
+	if(person == "org")
+{
+    for (i = 0; ( i<=comVal-1 && (commit[i]!=undefined)); i++) {
 		
         HtmlUrl = commit[i].html_url;
 	    commitApiUrl  = commit[i].url;
@@ -136,7 +138,36 @@ function processRepoCommits(RepoName, RepoHtmlUrl, commit) {
         });
 		
 	}
+}
+else
+{
+ for (i = 0; ( i<=comVal-1 && (commit[i]!=undefined)); i++) {
+        
+        HtmlUrl = commit[i].html_url;
+        commitApiUrl  = commit[i].url;
+        created_at = commit[i].commit.committer.date;
+        committedby = commit[i].commit.committer.name;
+        message = commit[i].commit.message;
+        $.ajax({
+            url: commitApiUrl+"?access_token=cde929ac80882135f84f2c69ac58ceb169896fb1",
+            async: false,
+                dataType: 'json',
+                crossDomain : true,
+                success: function(dataOfCommit) {
+                    out = processCommitData(RepoName, RepoHtmlUrl, committedby, HtmlUrl, created_at, message, dataOfCommit, person);
+                    //console.log(out+"karthik");
+                    $("#table_id tbody").append(out);
+                },
+                "error": function(xhr, ajaxOptions, thrownError) {
+                    document.getElementById("output").innerHTML = "ERROR : "+thrownError;
+                    console.log(thrownError);
+        }
+        });
+        
+    }
+}
     return out;
+
 };
 function processCommitData(RepoName, RepoHtmlUrl, committedby, HtmlUrl, created_at, message, dataOfCommit){
 var additions;
