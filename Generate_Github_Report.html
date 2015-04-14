@@ -15,18 +15,18 @@
   <body>
 
         <h4>Enter the name of the organisation : <input type="text" id="orgName" value="seattletestbed"><br>
-        <button type="button" onclick="generateReport(document.getElementById('orgName').value,'issue')">
+        <button type="button" onclick="generateReport(document.getElementById('orgName').value,'issue','')">
             Show Issue Report</button>
-        <button type="button" onclick="generateReport(document.getElementById('orgName').value,'commit')">
-            Show Commit History</button><br>
+        <button type="button" onclick="generateReport(document.getElementById('orgName').value,'commit',document.getElementById('orgcomVal').value)">
+            Show Commit History</button>  Number of commits to diplay for each repo : <input type="text" id="orgcomVal" value="10" size="2"><br>
         
         (OR) <br>
 
         Enter the github user id of the user   : <input type="text" id="userName"  value="karthikgvss"><br>
-        <button type="button" onclick="generateUserReport(document.getElementById('userName').value,'issue')">
+        <button type="button" onclick="generateUserReport(document.getElementById('userName').value,'issue','')">
             Show Issue Report</button>
-        <button type="button" onclick="generateUserReport(document.getElementById('userName').value,'commit')">
-            Show Commit History</button>
+        <button type="button" onclick="generateUserReport(document.getElementById('userName').value,'commit',document.getElementById('usercomVal').value)">
+            Show Commit History</button>  Number of commits to diplay for each repo : <input type="text" id="usercomVal" value="10" size="2"><br>
         </h4>
 
         <div id="output"> </div>
